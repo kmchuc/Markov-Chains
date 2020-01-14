@@ -13,9 +13,9 @@ def open_and_read_file(file_path):
     # your code goes here
 
     f = open(file_path, 'r')
-    f.read()
+    f = f.read()
 
-    file_path.close()
+    #file_path.close()
     return f
 
 def make_chains(text_string):
@@ -46,6 +46,24 @@ def make_chains(text_string):
     chains = {}
 
     # your code goes here
+
+    list_of_words = text_string.split()
+
+    i = 0
+    for word in list_of_words:
+        if i < (len(list_of_words) - 2):
+            second_word = list_of_words[i+1] 
+            third_word = list_of_words[i+2] 
+            key = (word, second_word)
+
+            if (word, second_word) in chains:
+                chains[(key)].append(third_word)
+            
+            else:
+                chains[(key)] = [third_word]
+                i += 1
+    
+    print(chains)
 
     return chains
 
