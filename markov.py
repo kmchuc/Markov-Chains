@@ -56,9 +56,15 @@ def make_chains(text_string):
             third_word = list_of_words[i+2] 
             key = (word, second_word)
 
+    #for every word that in the list of words:
+    #   we want the first two words = key
+    #   second word in key + next position = new key and add to dictionary
+    #   want this to loop continously for every words in list of words
+
             if (word, second_word) in chains:
                 chains[(key)].append(third_word)
-            
+                i += 1
+                
             else:
                 chains[(key)] = [third_word]
                 i += 1
@@ -80,16 +86,43 @@ def make_text(chains):
    
     for x in range(length):
         rand_index = random.randint(0, length)
+    #for loop used to create first two words for our string
 
-    if len(words) == 0:
-        random_key = key_list[rand_index]
-        first_word = random_key[0]
-        scnd_word = random_key[1]
+    while True:
+        if len(words) == 0: #if list is empty
+            random_key = key_list[rand_index]
+            first_word = random_key[0]
+            scnd_word = random_key[1]
+            
+            words.extend([first_word, scnd_word])
+
+            values = chains[(words[-2], words[-1])]
+            
+            third_word = random.choice(values)
+            words.extend([third_word])
+            new_key = (first_word, scnd_word)
+            
+        if new_key in key_list: 
+            #once our first two words are randomly picked for our final string
+            #looped:
+            #key (new_one, new_two) doesn't exist in key_list
+            values = chains[(words[-2], words[-1])]
+            
+            third_word = random.choice(values)
+            words.extend([third_word])
+            new_key = (words[-2], words[-1])
+
+        else:
+            return " ".join(words)
+
         
-        words.extend([first_word, scnd_word])
-        print(words)
-        values = chains[(words[-2], words[-1])]
-        print(values)
+
+
+    #step 1: combine first + scnd + third word 
+
+    #step 1.5: randomly pick a third word from values
+    #step 2: previous scd + third word = new key
+    #step 3: pick a random value from the new key in step 2
 
     # #while True:
     # for key in key_list:
@@ -114,7 +147,6 @@ input_text = open_and_read_file(input_path)
 # Get a Markov chain
 chains = make_chains(input_text)
 
-print(chains)
 # Produce random text
 random_text = make_text(chains)
 
