@@ -119,3 +119,7 @@ print(chains)
 random_text = make_text(chains)
 
 print(random_text)
+
+
+#TO DO TOMORROW: -FIX DICTIONARY NOT ADDING THE RIGHT VALUES
+# -LOOP SUCH THAT THE LAST TWO WORDS OF STRING IS NEW KEY
